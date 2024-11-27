@@ -28,3 +28,16 @@ class CustomerTestCase(TestCase):
                 email="daniel.mohajer.mohacel@gmail.com",
                 bank_account_number="098765432109"
             )
+            
+    def test_update_customer(self):
+        """Ensure we can update a customer"""
+        self.customer.firstname = "Dan"
+        self.customer.save()
+        self.assertEqual(Customer.objects.get(id=self.customer.id).firstname, "Dan")
+
+    def test_delete_customer(self):
+        """Ensure we can delete a customer"""
+        customer_id = self.customer.id
+        self.customer.delete()
+        with self.assertRaises(Customer.DoesNotExist):
+            Customer.objects.get(id=customer_id)
